@@ -50,9 +50,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                         Intent(
                             Intent.ACTION_VIEW,
                             Uri.parse(viewModel.etSearch.value.toString())
-                        ).let { startActivity(it)}
+                        ).let { startActivity(it) }
                     } catch (e: Exception) {
-                        showToast(e.message.toString())
+                        showToast("Exception !!!\n" + e.message.toString())
                     }
                 } else {
                     showToast(getString(R.string.fail_msg))
