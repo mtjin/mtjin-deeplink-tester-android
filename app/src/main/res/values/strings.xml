@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MtjinDLT</string>
+    <string name="app_name">DeepLink Tester</string>
     <string name="search_text">SEARCH</string>
     <string name="deep_link_url_hint">Deep Link Url</string>
     <string name="fail_msg">Fail</string>
