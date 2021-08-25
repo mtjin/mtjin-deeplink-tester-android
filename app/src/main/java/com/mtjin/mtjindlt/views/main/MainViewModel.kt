@@ -26,32 +26,32 @@ class MainViewModel @Inject constructor(private val repository: MainRepository) 
 
     // 딥링크 검색 버튼 클릭
     fun onClickSearch() {
-        repository.insertDeepLinkUrl(
-            DeepLinkUrl(
-                url = etSearch.value.toString(),
-                timestamp = getTimestamp()
+        if (etSearch.value.toString().isNotBlank()) {
+            repository.insertDeepLinkUrl(
+                DeepLinkUrl(
+                    url = etSearch.value.toString(),
+                    timestamp = getTimestamp()
+                )
             )
-        ).doOnComplete { fetchDeepLinkUrlHistories() }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onComplete = {
-                    _onClickSearch.value = true
-                    fetchDeepLinkUrlHistories()
-                },
-                onError = {
-                    Log.d("TAG", "onClickSearch() onError() -> " + it.localizedMessage)
-                    _onClickSearch.value = false
-                }
-            ).addTo(compositeDisposable)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onComplete = {
+                        _onClickSearch.value = true
+                        fetchDeepLinkUrlHistories()
+                    },
+                    onError = {
+                        Log.d("TAG", "onClickSearch() onError() -> " + it.localizedMessage)
+                        _onClickSearch.value = false
+                    }
+                ).addTo(compositeDisposable)
+        }
     }
 
     fun fetchDeepLinkUrlHistories() {
         repository.getDeepLinkUrls()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { showProgress() }
-            .doAfterTerminate { hideProgress() }
             .subscribeBy(
                 onSuccess = {
                     _deepLinkUrlList.value = it
