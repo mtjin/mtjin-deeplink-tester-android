@@ -10,7 +10,7 @@ interface MainDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertDeepLinkUrl(deepLinkUrl: DeepLinkUrl): Completable
 
-    @Query("SELECT * FROM deepLinkUrl  ORDER BY `timestamp`")
+    @Query("SELECT * FROM deepLinkUrl  ORDER BY `timestamp` DESC")
     fun getDeepLinkUrls(): Single<List<DeepLinkUrl>>
 
     @Delete
